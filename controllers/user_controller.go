@@ -16,11 +16,10 @@ func SignUpUser(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	client := models.InitRedis()
 
 	session := map[string]string{"firstname": user_input.Firstname, "lastname": user_input.Lastname, "email": user_input.Email, "phone_number": user_input.Phone_number}
 	for k, v := range session {
-		err := client.HSet(context.Background(), "user-session:123", k, v).Err()
+		err := models.Cache.HSet(context.Background(), "user-session:123", k, v).Err()
 		if err != nil {
 			panic(err)
 		}

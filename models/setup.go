@@ -7,6 +7,7 @@ import (
 )
 
 var Database *gorm.DB
+var Cache *redis.Client
 
 func ConnectDatabase() {
 	database, err := gorm.Open(sqlite.Open("user.db"), &gorm.Config{})
@@ -21,11 +22,11 @@ func ConnectDatabase() {
 
 }
 
-func InitRedis() *redis.Client {
+func InitRedis() {
 	client := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
-	return client
+	Cache = client
 }
