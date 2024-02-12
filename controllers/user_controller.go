@@ -24,6 +24,7 @@ func SignUpUser(ctx *gin.Context) {
 			panic(err)
 		}
 	}
+	Save_token_send_email(user_input.Email, models.USER_SIGN_UP)
 	// userSesion := client.HGetAll(context.Background(), "user-session:123").Val()
 	TokenProfile := models.TokenProfile{
 		Message:  fmt.Sprintf("Email with token sent to %s", user_input.Email),
